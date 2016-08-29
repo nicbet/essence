@@ -19,8 +19,12 @@ defmodule Essence.Tokenizer do
   Splits a given String into tokens on punctuation. Supports Unicode.
   """
   def split_punctuation(text) do
-    #http://stackoverflow.com/questions/2206378/how-to-split-a-string-but-also-keep-the-delimiters
-    text |> String.split(~r/((?<=\pP)|(?=\pP))/u, trim: true)
+    if String.ends_with?(text, "'s") do
+      [text]
+    else
+      #http://stackoverflow.com/questions/2206378/how-to-split-a-string-but-also-keep-the-delimiters
+      text |> String.split(~r/((?<=\pP)|(?=\pP))/u, trim: true)
+    end
   end
 
 end
