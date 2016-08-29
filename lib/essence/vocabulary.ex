@@ -15,6 +15,6 @@ defmodule Essence.Vocabulary do
       end)
   end
   def vocabulary(text) when is_bitstring(text) do
-    vocabulary(tokenize(text))
+    vocabulary(Essence.Tokenizer.tokenize(text))
   end
 end
