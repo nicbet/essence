@@ -1,5 +1,6 @@
 defmodule Essence do
-  def tokenize(text) do
-    Essence.Tokenizer.tokenize(text)
+  def read_file(filename) do
+    text = File.read!(filename)
+    text
   end
 end
