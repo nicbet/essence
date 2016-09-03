@@ -77,7 +77,7 @@ What might the top 10 most frequent tokens be?
   ```
 
 Next, we can compute the lexical richness of the text:
-    ```elixir
-    iex> Essence.Vocabulary.lexical_richness(text)
-    16.74438622754491
-    ```
+  ```elixir
+  iex> Essence.Vocabulary.lexical_richness(text)
+  16.74438622754491
+  ```
