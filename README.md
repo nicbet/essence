@@ -46,9 +46,9 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 First, reading a plain text into Essence. In the following examples we will
 use `test/genesis.txt`, which is a copy of the book of genesis
 from the King James Bible (http://www.gutenberg.org/ebooks/8001.txt.utf-8)
-    ```elixir
-    iex> text = Essence.read_text("test/genesis.txt")
-    ```
+  ```elixir
+  iex> text = Essence.read_text("test/genesis.txt")
+  ```
 
 Let's first tokenize this text.
   ```elixir
