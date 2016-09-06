@@ -3,8 +3,8 @@ defmodule VocabularyTest do
   doctest Essence.Vocabulary
 
   test "Vocabularizes simple sentence" do
-    voc = %{"a" => 2, "day" => 2, "," => 1, "what" => 1}
-    assert Essence.Vocabulary.vocabulary("a day, what a day") == voc
+    fd = %{"a" => 2, "day" => 2, "," => 1, "what" => 1}
+    assert Essence.Vocabulary.freq_dist("a day, what a day") == fd
   end
 
 end

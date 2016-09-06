@@ -3,4 +3,9 @@ defmodule Essence do
     text = File.read!(filename)
     text
   end
+
+  def stream_lines(filename) do
+    stream = File.stream!(filename, [], :line)
+    stream
+  end
 end

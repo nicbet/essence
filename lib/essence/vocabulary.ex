@@ -29,6 +29,7 @@ defmodule Essence.Vocabulary do
     tokens = Essence.Tokenizer.tokenize(text)
     text_length = Enum.count(tokens)
     token_set = vocabulary(tokens)
+    # TODO Deal with text of length 0
     text_length / Enum.count(token_set)
   end
 
