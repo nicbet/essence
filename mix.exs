@@ -36,6 +36,6 @@ defmodule Essence.Mixfile do
   end
 
   defp deps do
-    []
+    [ {:exprof, "~> 0.2.0"} ]
   end
 end
