@@ -19,6 +19,10 @@ defmodule Essence.Readability do
     avg_word_len = ( tokens |> Enum.map(&token_length/1) |> Enum.reduce(&+/2) ) / Enum.count(tokens)
     avg_word_len
   end
+
+  @doc """
+  Calculates the length of a `token` as the number of graphemes in that token.
+  """
   def token_length(token) do
     String.length(token)
   end

@@ -31,9 +31,4 @@ defmodule Essence.Document do
     end
   end
 
-  def paragraphs(document) do
-    pars = String.split(document, ~r/\n\n/u)
-    pars
-  end
-
 end

@@ -10,10 +10,10 @@ defmodule Essence.Tokenizer do
   punctuation, treating words and punctutation as tokens, and removing whitespace.
   """
   @spec tokenize(String.t) :: List.t
-  def tokenize(text) do
+  def tokenize(text, opts \\ []) do
    text
    |> String.split(~r/\s+/u)
-   |> Enum.reduce([], fn(x, acc) -> acc ++ split_punctuation(x) end)
+   |> Enum.reduce([], fn(x, acc) -> acc ++ split_with_punctuation(x) end)
   end
 
   @doc """
@@ -26,15 +26,29 @@ defmodule Essence.Tokenizer do
   end
 
   @doc """
-  Splits a given String into tokens on punctuation. Supports Unicode.
+  Splits a given String into tokens on punctuation, and include the punctuation as a token.
+  This method supports Unicode text.
   """
-  @spec split_punctuation(String.t) :: List.t
-  def split_punctuation(text) do
+  @spec split_with_punctuation(String.t) :: List.t
+  def split_with_punctuation(text) do
     if String.ends_with?(text, "'s") do
       [text]
     else
       #http://stackoverflow.com/questions/2206378/how-to-split-a-string-but-also-keep-the-delimiters
       text |> String.split(~r/((?<=\pP)|(?=\pP))/u, trim: true)
+    end
+  end
+
+  @doc """
+  Splits a given `text` into tokens on punctuation, but omits the punctuation tokens.
+  This method supports Unicode text.
+  """
+  @spec split_with_punctuation(String.t) :: List.t
+  def split_without_punctuation(text) do
+    if String.ends_with?(text, "'s'") do
+      [text]
+    else
+      text |> String.split(~r/\pP/u, trim: true)
     end
   end
 
