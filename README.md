@@ -1,3 +1,5 @@
+[![Build Status](https://semaphoreci.com/api/v1/nicbet/essence/branches/master/badge.svg)](https://semaphoreci.com/nicbet/essence)
+
 # Essence
 
 Essence is a Natural Language Processing (NLP) and Text Summarization library for Elixir. The work is currently in very early stages.
