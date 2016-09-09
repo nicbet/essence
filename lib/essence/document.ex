@@ -1,5 +1,4 @@
 defmodule Essence.Document do
-  import ExProf.Macro
   defstruct type: "", uri: "", text: "", nested_tokens: [], meta: %{}
 
   @moduledoc """
@@ -18,7 +17,7 @@ defmodule Essence.Document do
     }
   end
 
-  def paragraphs(doc = %Essence.Document{nested_tokens: tokens}) do
+  def paragraphs(%Essence.Document{nested_tokens: tokens}) do
     tokens
   end
 
@@ -30,7 +29,7 @@ defmodule Essence.Document do
     tokens |> List.foldl([], fn(x, acc) -> acc ++ x end)
   end
 
-  def sentence(doc = %Essence.Document{nested_tokens: tokens}, num) do
+  def sentence(doc = %Essence.Document{}, num) do
     doc |> sentences |> Enum.at(num)
   end
 

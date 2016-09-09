@@ -1,4 +1,5 @@
 defmodule Essence.Benchmark do
+  import ExProf.Macro
 
   def from_plaintext_file_a(filename) do
     profile do
@@ -8,7 +9,7 @@ defmodule Essence.Benchmark do
         type: :plain_text,
         uri: filename,
         text: content,
-        tokens: tokens
+        nested_tokens: tokens
       }
     end
   end
@@ -21,7 +22,7 @@ defmodule Essence.Benchmark do
         type: :plain_text,
         uri: filename,
         text: "",
-        tokens: tokens
+        nested_tokens: tokens
       }
     end
   end
