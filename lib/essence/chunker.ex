@@ -1,4 +1,7 @@
 defmodule Essence.Chunker do
+  @moduledoc """
+  This module contains helpful methods to chunk text into paragraphs and sentences.
+  """
 
   @doc """
   Chunks a given `text` into paragraphs. A paragraph is any text, separated by two or more newline characters.

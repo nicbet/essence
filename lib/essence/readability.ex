@@ -26,4 +26,8 @@ defmodule Essence.Readability do
   def token_length(token) do
     String.length(token)
   end
+
+  def smog(text) do
+    sentences = Essence.Chunker.sentences(text)
+  end
 end
