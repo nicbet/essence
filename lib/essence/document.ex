@@ -36,7 +36,7 @@ defmodule Essence.Document do
   """
   @spec paragraph(document :: %Essence.Document{}, n :: integer) :: List.t 
   def paragraph(%Essence.Document{nested_tokens: tokens}, n) do
-    tokens |> Enum.at(num)
+    tokens |> Enum.at(n)
   end
 
   @doc """
@@ -52,7 +52,7 @@ defmodule Essence.Document do
   """
   @spec sentence(document :: %Essence.Document{}, n :: integer) :: List.t
   def sentence(doc = %Essence.Document{}, n) do
-    doc |> sentences |> Enum.at(num)
+    doc |> sentences |> Enum.at(n)
   end
 
   @doc """
