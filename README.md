@@ -1,5 +1,5 @@
 [![Build Status](https://semaphoreci.com/api/v1/nicbet/essence/branches/master/shields_badge.svg)](https://semaphoreci.com/nicbet/essence)
-[Project Stage](https://img.shields.io/badge/stage-pre--alpha-red.svg)
+![Project Stage](https://img.shields.io/badge/stage-pre--alpha-red.svg)
 
 # Essence
 
@@ -62,7 +62,7 @@ We can see that the text contains 1,533 paragraphs, 1,663 sentences and 44,741 t
   ```
 
 What might the first sentence of genesis be?
-  ``` elixir
+  ```elixir
   iex> Essence.Document.sentence document, 0
   ```
 
@@ -76,7 +76,7 @@ What is the vocabulary of this text?
   iex> vocabulary = Essence.Vocabulary.vocabulary document
   ```
   or alternatively we can use the frequency distribution for the equivalent expression:
-  ``` elixir
+  ```elixir
   iex> vocabulary = Map.keys fd
   ```
 
