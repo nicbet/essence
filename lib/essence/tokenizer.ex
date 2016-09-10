@@ -1,7 +1,7 @@
 defmodule Essence.Tokenizer do
   @moduledoc """
-  The Tokenizer module exposes useful functions for transforming
-  text into tokens and for dealing with tokens.
+  The `Essence.Tokenizer` module exposes useful functions for transforming
+  text into `tokens` and for dealing with `tokens`.
   """
 
   @doc """

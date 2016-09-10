@@ -27,7 +27,7 @@ defmodule Essence.Mixfile do
   defp package do
     [
       name: :essence,
-      files: ["lib", "priv", "mix.exs", "README*", "LICENSE*", "license*"],
+      files: ["lib", "mix.exs", "README*", "LICENSE*"],
       maintainers: ["Nicolas Bettenburg"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/nicbet/essence",
@@ -36,6 +36,8 @@ defmodule Essence.Mixfile do
   end
 
   defp deps do
-    [ {:exprof, "~> 0.2.0"} ]
+    [ {:exprof, "~> 0.2.0", only: :dev},
+      {:ex_doc, ">= 0.0.0", only: :dev}
+    ]
   end
 end

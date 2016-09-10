@@ -4,9 +4,11 @@ defmodule Essence.Vocabulary do
   """
 
   @doc """
-  The `vocabulary` method computes the vocabulary of a text. The vocabulary
-  is the unique set of dictionary words in that text.
+  The `vocabulary` method computes the vocabulary of a given
+  `Essence.Document`. The vocabulary is the unique set of dictionary words in
+  that text.
   """
+  @spec vocabulary(Essence.Document.t) :: List.t
   def vocabulary(d = %Essence.Document{}) do
     vocabulary(Essence.Document.enumerate_tokens d)
   end

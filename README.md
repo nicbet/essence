@@ -1,5 +1,6 @@
 [![Build Status](https://semaphoreci.com/api/v1/nicbet/essence/branches/master/shields_badge.svg)](https://semaphoreci.com/nicbet/essence)
 ![Project Stage](https://img.shields.io/badge/stage-pre--alpha-red.svg)
+[![Hex.pm](https://img.shields.io/hexpm/v/essence.svg?maxAge=2592000)](https://hex.pm/packages/essence)
 
 # Essence
 
@@ -11,7 +12,7 @@ Essence is a Natural Language Processing (NLP) and Text Summarization library fo
 - [x] Sentence Detection and Chunking (Basic, done)
 - [x] Vocabulary (Basic, done)
 - [x] Documents (Draft, done)
-- [ ] *Readability* (ARI done, SMOG in progress, FC, GF, DC, CL todo)
+- [ ] **Readability** (ARI done, SMOG in progress, FC, GF, DC, CL todo)
 - [ ] Corpora
 - [ ] Bi-Grams
 - [ ] Tri-Grams

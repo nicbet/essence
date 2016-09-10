@@ -1,6 +1,14 @@
 defmodule Essence.Benchmark do
   import ExProf.Macro
+  @moduledoc """
+  This module contains a collection of methods that assist in benchmarking and
+  performance optimizing the Essence package.
+  """
 
+  @doc """
+  Reading a plain text file from the given `filename` path and tokenizing the
+  text. Alternative A.
+  """
   def from_plaintext_file_a(filename) do
     profile do
       content = File.read!(filename)
@@ -14,6 +22,10 @@ defmodule Essence.Benchmark do
     end
   end
 
+  @doc """
+  Reading a plain text file from the given `filename` path and tokenizing the
+  text. Alternative B.
+  """
   def from_plaintext_file_b(filename) do
     profile do
       stream = Essence.stream_lines(filename)
