@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Essence by nicbet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Essence</h1>
+      <h2 class="project-tagline">Essence is a library for Natural Language Processing and Text Summarization in Elixir.</h2>
+      <a href="https://github.com/nicbet/essence" class="btn">View on GitHub</a>
+      <a href="https://github.com/nicbet/essence/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/nicbet/essence/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p><a href="https://semaphoreci.com/nicbet/essence"><img src="https://semaphoreci.com/api/v1/nicbet/essence/branches/master/shields_badge.svg" alt="Build Status"></a>
+<img src="https://img.shields.io/badge/stage-pre--alpha-red.svg" alt="Project Stage"></p>
+
+<h1>
+<a id="essence" class="anchor" href="#essence" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Essence</h1>
+
+<p>Essence is a Natural Language Processing (NLP) and Text Summarization library for Elixir. The work is currently in very early stages.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>If <a href="https://hex.pm/docs/publish">available in Hex</a>, the package can be installed as:</p>
+
+<ol>
+<li>
+<p>Add <code>essence</code> to your list of dependencies in <code>mix.exs</code>:</p>
+
+<div class="highlight highlight-source-elixir"><pre><span class="pl-k">def</span> <span class="pl-en">deps</span> <span class="pl-k">do</span>
+  [{<span class="pl-c1">:essence</span>, <span class="pl-s"><span class="pl-pds">"</span>~&gt; 0.1.0<span class="pl-pds">"</span></span>}]
+<span class="pl-k">end</span></pre></div>
+</li>
+</ol>
+
+<h2>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h2>
+
+<p>In the following examples we will use <code>test/genesis.txt</code>, which is a copy of
+the book of genesis from the King James Bible
+(<a href="http://www.gutenberg.org/ebooks/8001.txt.utf-8">http://www.gutenberg.org/ebooks/8001.txt.utf-8</a>).</p>
+
+<p>We provide a convenience method for reading the plain text of the book of
+genesis into <code>Essence</code> via the method <code>Essence.genesis/1</code></p>
+
+<p>Let's first create a document from the text:</p>
+
+<div class="highlight highlight-source-elixir"><pre>  iex<span class="pl-k">&gt;</span> document <span class="pl-k">=</span> <span class="pl-en">Essence</span>.<span class="pl-en">Document</span>.from_text <span class="pl-en">Essence</span>.genesis</pre></div>
+
+<p>We can see that the text contains 1,533 paragraphs, 1,663 sentences and 44,741 tokens.</p>
+
+<div class="highlight highlight-source-elixir"><pre>  iex<span class="pl-k">&gt;</span> document <span class="pl-k">|</span><span class="pl-k">&gt;</span> <span class="pl-en">Essence</span>.<span class="pl-en">Document</span>.enumerate_tokens <span class="pl-k">|</span><span class="pl-k">&gt;</span> <span class="pl-en">Enum</span>.count
+  iex<span class="pl-k">&gt;</span> document <span class="pl-k">|</span><span class="pl-k">&gt;</span> <span class="pl-en">Essence</span>.<span class="pl-en">Document</span>.paragraphs <span class="pl-k">|</span><span class="pl-k">&gt;</span> <span class="pl-en">Enum</span>.count
+  iex<span class="pl-k">&gt;</span> document <span class="pl-k">|</span><span class="pl-k">&gt;</span> <span class="pl-en">Essence</span>.<span class="pl-en">Document</span>.sentences <span class="pl-k">|</span><span class="pl-k">&gt;</span> <span class="pl-en">Enum</span>.count</pre></div>
+
+<p>What might the first sentence of genesis be?</p>
+
+<div class="highlight highlight-source-elixir"><pre>  iex<span class="pl-k">&gt;</span> <span class="pl-en">Essence</span>.<span class="pl-en">Document</span>.sentence document, <span class="pl-c1">0</span></pre></div>
+
+<p>Now let's compute the frequency distribution for tokens in the book of genesis:</p>
+
+<div class="highlight highlight-source-elixir"><pre>  iex<span class="pl-k">&gt;</span> fd <span class="pl-k">=</span> <span class="pl-en">Essence</span>.<span class="pl-en">Vocabulary</span>.freq_dist document</pre></div>
+
+<p>What is the vocabulary of this text?</p>
+
+<div class="highlight highlight-source-elixir"><pre>  iex<span class="pl-k">&gt;</span> vocabulary <span class="pl-k">=</span> <span class="pl-en">Essence</span>.<span class="pl-en">Vocabulary</span>.vocabulary document</pre></div>
+
+<p>or alternatively we can use the frequency distribution for the equivalent expression:</p>
+
+<div class="highlight highlight-source-elixir"><pre>  iex<span class="pl-k">&gt;</span> vocabulary <span class="pl-k">=</span> <span class="pl-en">Map</span>.keys fd</pre></div>
+
+<p>What might the top 10 most frequent tokens be?</p>
+
+<div class="highlight highlight-source-elixir"><pre>  iex<span class="pl-k">&gt;</span> vocabulary <span class="pl-k">|</span><span class="pl-k">&gt;</span> <span class="pl-en">Enum</span>.sort_by( <span class="pl-k">fn</span>(<span class="pl-smi">x</span>) <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-en">Map</span>.get(fd, x) <span class="pl-k">end</span>, &amp;<span class="pl-k">&gt;=</span><span class="pl-k">/</span><span class="pl-c1">2</span> ) <span class="pl-k">|</span><span class="pl-k">&gt;</span> <span class="pl-en">Enum</span>.slice(<span class="pl-c1">1</span>, <span class="pl-c1">10</span>)
+  [<span class="pl-s"><span class="pl-pds">"</span>and<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>the<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>of<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>.<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>And<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>:<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>his<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>he<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>to<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>;<span class="pl-pds">"</span></span>]</pre></div>
+
+<p>Next, we can compute the lexical richness of the text:</p>
+
+<div class="highlight highlight-source-elixir"><pre>  iex<span class="pl-k">&gt;</span> <span class="pl-en">Essence</span>.<span class="pl-en">Vocabulary</span>.lexical_richness document
+  <span class="pl-c1">16.74438622754491</span></pre></div>
+
+<h2>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ToDo</h2>
+
+<ul>
+<li>[x] Tokenization (Basic, done)</li>
+<li>[x] Sentence Detection and Chunking (Basic, done)</li>
+<li>[x] Vocabulary (Basic, done)</li>
+<li>[x] Documents (Draft, done)</li>
+<li>[ ] <em>Readability</em> (ARI done, SMOG in progress, FC, GF, DC, CL todo)</li>
+<li>[ ] Corpora</li>
+<li>[ ] Bi-Grams</li>
+<li>[ ] Tri-Grams</li>
+<li>[ ] n-Grams</li>
+<li>[ ] Frequency Measures</li>
+<li>[ ] Time-Series Documents</li>
+<li>[ ] Dispersion</li>
+<li>[ ] Similarity Measures</li>
+<li>[ ] Part of Speech Tagging</li>
+<li>[ ] Sentiment Analysis</li>
+<li>[ ] Classification</li>
+<li>[ ] Summarization</li>
+<li>[ ] Document Hierarchies</li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/nicbet/essence">Essence</a> is maintained by <a href="https://github.com/nicbet">nicbet</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
