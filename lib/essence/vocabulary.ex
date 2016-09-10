@@ -7,6 +7,9 @@ defmodule Essence.Vocabulary do
   The `vocabulary` method computes the vocabulary of a text. The vocabulary
   is the unique set of dictionary words in that text.
   """
+  def vocabulary(d = %Essence.Document{}) do
+    vocabulary(Essence.Document.enumerate_tokens d)
+  end
   def vocabulary(frequency_distribution) when is_map(frequency_distribution) do
     Map.keys(frequency_distribution)
   end
@@ -25,6 +28,11 @@ defmodule Essence.Vocabulary do
   The `lexical_richness` method computes the lexical richness of a given
   text.
   """
+  def lexical_richness(d = %Essence.Document{}) do
+    n_tokens = d |> Essence.Document.enumerate_tokens |> Enum.count
+    vocab_size = d |> vocabulary |> Enum.count
+    n_tokens / vocab_size
+  end
   def lexical_richness(text) when is_bitstring(text) do
     tokens = Essence.Tokenizer.tokenize(text)
     text_length = Enum.count(tokens)
@@ -37,8 +45,11 @@ defmodule Essence.Vocabulary do
   The `freq_dist` method calculates the frequency distribution
   of tokens in the given text.
   """
-  def freq_dist(text) when is_list(text) do
-    text
+  def freq_dist(d = %Essence.Document{}) do
+    freq_dist Essence.Document.enumerate_tokens d
+  end
+  def freq_dist(tokens) when is_list(tokens) do
+    tokens
     |> Enum.reduce(%{}, fn(token, acc) ->
         Map.update(acc, token, 1, &(&1 + 1))
       end)

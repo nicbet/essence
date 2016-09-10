@@ -1,26 +1,30 @@
 [![Build Status](https://semaphoreci.com/api/v1/nicbet/essence/branches/master/shields_badge.svg)](https://semaphoreci.com/nicbet/essence)
+[Project Stage](https://img.shields.io/badge/stage-pre--alpha-red.svg)
+
 # Essence
 
 Essence is a Natural Language Processing (NLP) and Text Summarization library for Elixir. The work is currently in very early stages.
 
 ## ToDo
 
-- [x] Tokenization
-- [ ] Sentence Detection and Chunking
-- [ ] Vocabulary
-- [ ] Part of Speech Tagging
-- [ ] Sentiment Analysis
+- [x] Tokenization (Basic, done)
+- [x] Sentence Detection and Chunking (Basic, done)
+- [x] Vocabulary (Basic, done)
+- [x] Documents (Draft, done)
+- [ ] *Readability* (ARI done, SMOG in progress, FC, GF, DC, CL todo)
+- [ ] Corpora
 - [ ] Bi-Grams
 - [ ] Tri-Grams
 - [ ] n-Grams
-- [ ] Documents
-- [ ] Corpora
+- [ ] Frequency Measures
 - [ ] Time-Series Documents
-- [ ] Document Hierarchies
 - [ ] Dispersion
 - [ ] Similarity Measures
+- [ ] Part of Speech Tagging
+- [ ] Sentiment Analysis
 - [ ] Classification
 - [ ] Summarization
+- [ ] Document Hierarchies
 
 ## Installation
 
@@ -34,41 +38,46 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
     end
     ```
 
-  2. Ensure `essence` is started before your application:
-
-    ```elixir
-    def application do
-      [applications: [:essence]]
-    end
-    ```
 
 ## Examples
 
-First, reading a plain text into Essence. In the following examples we will
-use `test/genesis.txt`, which is a copy of the book of genesis
-from the King James Bible (http://www.gutenberg.org/ebooks/8001.txt.utf-8)
+In the following examples we will use `test/genesis.txt`, which is a copy of
+the book of genesis from the King James Bible
+(http://www.gutenberg.org/ebooks/8001.txt.utf-8).
+
+We provide a convenience method for reading the plain text of the book of
+genesis into `Essence` via the method `Essence.genesis/1`
+
+Let's first create a document from the text:
+
   ```elixir
-  iex> text = Essence.read_text("test/genesis.txt")
+  iex> document = Essence.Document.from_text Essence.genesis
   ```
 
-Let's first tokenize this text.
+We can see that the text contains 1,533 paragraphs, 1,663 sentences and 44,741 tokens.
   ```elixir
-  iex> tokens = Essence.Tokenizer.tokenize(text)
+  iex> document |> Essence.Document.enumerate_tokens |> Enum.count
+  iex> document |> Essence.Document.paragraphs |> Enum.count
+  iex> document |> Essence.Document.sentences |> Enum.count
   ```
 
-We can see that the text contains 44,741 tokens.
-  ```elixir
-  iex> tokens |> Enum.count
+What might the first sentence of genesis be?
+  ``` elixir
+  iex> Essence.Document.sentence document, 0
   ```
 
-Now let's compute the frequency distribution for each token:
+Now let's compute the frequency distribution for tokens in the book of genesis:
   ```elixir
-  iex> fd = Essence.Vocabulary.freq_dist(tokens)
+  iex> fd = Essence.Vocabulary.freq_dist document
   ```
 
 What is the vocabulary of this text?
   ```elixir
-  iex> vocabulary = Essence.Vocabulary.vocabulary(tokens)
+  iex> vocabulary = Essence.Vocabulary.vocabulary document
+  ```
+  or alternatively we can use the frequency distribution for the equivalent expression:
+  ``` elixir
+  iex> vocabulary = Map.keys fd
   ```
 
 What might the top 10 most frequent tokens be?
@@ -79,6 +88,6 @@ What might the top 10 most frequent tokens be?
 
 Next, we can compute the lexical richness of the text:
   ```elixir
-  iex> Essence.Vocabulary.lexical_richness(text)
+  iex> Essence.Vocabulary.lexical_richness document
   16.74438622754491
   ```
