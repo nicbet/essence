@@ -40,4 +40,13 @@ defmodule Essence do
   def trump() do
     read_file("test/trump-speech.txt")
   end
+
+  @doc """
+  The `clinton` method is a convenience method for reading the supplemented
+  plain-text file of the 2016 Hillary Clinton Nomination Acceptance Speech,
+  which is part of the Essence unit test suite.
+  """
+  def clinton() do
+    read_file("test/clinton-speech.txt")
+  end
 end
