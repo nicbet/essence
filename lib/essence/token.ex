@@ -25,10 +25,10 @@ defmodule Essence.Token do
   end
 
   @doc """
-  Determines whether a given `token` is a polysyllabic or not.
+  Determines whether a given `token` is a polysyllabic, containing more than `n` syllables, or not.
   """
-  def is_polysyllabic?(token) do
-    count_syllabels(token) > 1
+  def is_polysyllabic?(token, n \\ 1) do
+    count_syllabels(token) > n
   end
 
   @doc """

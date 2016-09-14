@@ -12,7 +12,7 @@ Essence is a Natural Language Processing (NLP) and Text Summarization library fo
 - [x] Sentence Detection and Chunking (Basic, done)
 - [x] Vocabulary (Basic, done)
 - [x] Documents (Draft, done)
-- [ ] **Readability** (ARI done, SMOG in progress, FC, GF, DC, CL todo)
+- [ ] **Readability** (ARI done, SMOG done, FC todo, GF done, DC done, CL todo)
 - [ ] Corpora
 - [ ] Bi-Grams
 - [ ] Tri-Grams

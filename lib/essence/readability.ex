@@ -42,4 +42,80 @@ defmodule Essence.Readability do
     ari |> Float.ceil |> Kernel.trunc
   end
 
+  @doc """
+  The `smog_grade` method calculates the SMOG grade measure of readability that
+  estimates the years of education needed to understand a piece of writing.
+  The SMOG grade is commonly used in rating health messages.
+  Please note that results for documents with less than 30 sentences are statistically invalid[1].
+
+  [1] https://en.wikipedia.org/wiki/SMOG
+  """
+  def smog_grade(doc = %Document{}) do
+    n_sentences = doc |> Document.sentences |> Enum.count
+    n_polys = doc |> Document.enumerate_tokens |> Enum.filter(&Token.is_word?/1) |> Enum.filter(&Token.is_polysyllabic?(&1, 3)) |> Enum.count
+    grade = 1.0430 * :math.sqrt(n_polys * 30 / n_sentences) + 3.1291
+    grade
+  end
+
+
+  @doc """
+  Gunning fog index measures the readability of English writing. The index
+  estimates the years of formal education needed to understand the text on a
+  first reading. A fog index of 12 requires the reading level of a U.S. high
+  school senior (around 18 years old). The test was developed by Robert
+  Gunning, an American businessman, in 1952.[1]
+
+  The fog index is commonly used to confirm that text can be read easily by the
+  intended audience. Texts for a wide audience generally need a fog index less
+  than 12. Texts requiring near-universal understanding generally need an index
+  less than 8.
+
+  [1] DuBay, William H. (23 March 2004). "Judges Scold Lawyers for Bad
+  Writing". Plain Language At Work Newsletter. Impact Information (8).
+
+  | Fog Index | Reading level by grade |
+  | --------- | ---------------------- |
+  | 17        | College graduate       |
+  | 16        | College senior         |
+  | 15        | College junior         |
+  | 14        | College sophomore      |
+  | 13        | College freshman       |
+  | 12        | High school senior     |
+  | 11        | High school junior     |
+  | 10        | High school sophomore  |
+  | 9         | High school freshman   |
+  | 8         | Eighth grade           |
+  | 7         | Seventh grade          |
+  | 6         | Sixth grade            |
+  """
+  def gunning_fog(doc = %Document{}) do
+    n_words = doc |> Document.enumerate_tokens |> Enum.filter(&Token.is_word?/1) |> Enum.count
+    n_sentences  = doc |> Document.sentences |> Enum.count
+    n_complex_words = doc |> Document.enumerate_tokens |> Enum.filter(&Token.is_word?/1) |> Enum.filter(&Token.is_polysyllabic?(&1, 3)) |> Enum.count
+    gf_index = 0.4 * ( (n_words / n_sentences) + 100 * (n_complex_words / n_words) )
+    gf_index
+  end
+
+  @doc """
+  Calculates the Dale-Chall readability score. that provides a numeric gauge of
+  the comprehension difficulty that readers come upon when reading a text. It
+  uses a list of 3000 words that groups of fourth-grade American students could
+  reliably understand, considering any word not on that list to be difficult.
+
+  | Score        | Notes                                                                |
+  | ------------ | -------------------------------------------------------------------- |
+  | 4.9 or lower | easily understood by an average 4th-grade student or lower           |
+  | 5.0–5.9      | easily understood by an average 5th or 6th-grade student             |
+  | 6.0–6.9      | easily understood by an average 7th or 8th-grade student             |
+  | 7.0–7.9      | easily understood by an average 9th or 10th-grade student            |
+  | 8.0–8.9      | easily understood by an average 11th or 12th-grade student           |
+  | 9.0–9.9      | easily understood by an average 13th to 15th-grade (college) student |
+  """
+  def dale_chall(doc = %Document{}) do
+    n_words = doc |> Document.enumerate_tokens |> Enum.filter(&Token.is_word?/1) |> Enum.count
+    n_sentences  = doc |> Document.sentences |> Enum.count
+    n_difficult_words = doc |> Document.enumerate_tokens |> Enum.filter(&Token.is_word?/1) |> Enum.filter(&Essence.DaleChall.is_hard_word?/1) |> Enum.count
+    score = 0.1579 * (n_difficult_words / n_words * 100) + 0.0496 * (n_words / n_sentences)
+    score
+  end
 end
