@@ -61,4 +61,17 @@ defmodule Essence.Vocabulary do
     freq_dist(Essence.Tokenizer.tokenize(text))
   end
 
+  @doc """
+  Return a list of {int, token} pairs, ordered by their token frequency in the given `Essence.Document`.
+  Optionally supply a filter function such as Essence.Token.is_word?/1 to exclude unwanted tokens from the calculation.
+  """
+  def top_tokens(doc = %Essence.Document{}, filter_fun \\ &always_true/1) do
+    voc = doc |> vocabulary
+    fd = doc |> freq_dist
+    voc |> Enum.sort( fn(l,r) -> Map.get(fd, l) > Map.get(fd, r) end ) |> Enum.filter(filter_fun) |> Enum.map( fn(x) -> {Map.get(fd, x), x} end )
+  end
+
+  defp always_true(_) do
+    true
+  end
 end

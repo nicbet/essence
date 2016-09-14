@@ -62,4 +62,12 @@ defmodule Essence.Document do
   def enumerate_tokens(%Essence.Document{nested_tokens: tokens}) do
     tokens |> List.flatten()
   end
+
+  @doc """
+  Retrieve the list of all words in the given `Essence.Document`, ignoring all tokens that are punctuation.
+  """
+  @spec words(document :: %Essence.Document{}) :: List.t
+  def words(doc = %Essence.Document{}) do
+    doc |> enumerate_tokens |> Enum.filter(&Essence.Token.is_word?/1)
+  end
 end
