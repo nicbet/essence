@@ -20,7 +20,7 @@ defmodule Essence.Mixfile do
   defp description do
     """
     Essence is a library for Natural Language Processing
-    and text summarization in Elixir.
+    and Text Summarization in Elixir.
     """
   end
 

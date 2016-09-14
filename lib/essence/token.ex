@@ -31,4 +31,19 @@ defmodule Essence.Token do
     count_syllabels(token) > 1
   end
 
+  @doc """
+  Determines whether a given `token` is punctuation or not.
+  Returns `true` if the token is punctuation, `false` otherwise.
+  """
+  def is_punctuation?(token) do
+    token |> String.match?(~r/\pP/u)
+  end
+
+  @doc """
+  Determines whether a given `token` is a word or not. Returns `true` if the
+  token is a word, `false` otherwise.
+  """
+  def is_word?(token) do
+    not is_punctuation?(token)
+  end
 end

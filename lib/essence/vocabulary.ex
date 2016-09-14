@@ -12,6 +12,7 @@ defmodule Essence.Vocabulary do
   def vocabulary(d = %Essence.Document{}) do
     vocabulary(Essence.Document.enumerate_tokens d)
   end
+  @spec vocabulary( Map.t ) :: List.t
   def vocabulary(frequency_distribution) when is_map(frequency_distribution) do
     Map.keys(frequency_distribution)
   end
