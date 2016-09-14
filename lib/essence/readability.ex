@@ -118,4 +118,39 @@ defmodule Essence.Readability do
     score = 0.1579 * (n_difficult_words / n_words * 100) + 0.0496 * (n_words / n_sentences)
     score
   end
+
+  @doc """
+  Calculates an estimate of the time it would take an average reader to read
+  the given `Essence.Document`, assuming a reading `speed` of 200 words per
+  minute.
+  """
+  def reading_time(doc = %Document{}, speed \\ 200) do
+    n_words = doc |> Document.words |> Enum.count
+    mins = Float.round(n_words / speed)
+    mins
+  end
+
+  @doc """
+  Calculates an estimate of the time it would take to read the given
+  `Essence.Document` as a speech, with a speaking `speed` of 120 words per
+  minute. 
+  """
+  def speaking_time(doc = %Document{}, speed \\ 120) do
+    n_words = doc |> Document.words |> Enum.count
+    n_sentences = doc |> Document.sentences |> Enum.count
+    mins = Float.round(n_words / speed) + n_sentences * 0.03
+    mins
+  end
+
+  @doc """
+  Calculates the speaking speed in words per minute, given a speech described
+  by the given `Essence.Document` and the recorded `speaking_time` in minutes.
+  """
+  def speaking_speed(doc = %Document{}, speaking_time) do
+    n_words = doc |> Document.words |> Enum.count
+    n_sentences = doc |> Document.sentences |> Enum.count
+    speed = Float.round(n_words / ( speaking_time - (n_sentences * 0.03) ))
+    speed
+  end
+
 end
