@@ -95,7 +95,7 @@ defmodule Essence.Document do
   `doc`. Prints `n` (default=20) characters of context.
   """
   def concordance(doc = %Essence.Document{}, token, n \\ 20) do
-    doc |> context_of(token) |> Enum.each(&center(&1, n))
+    doc |> context_of(token, round(n / 5)+2) |> Enum.each(&center(&1, n))
   end
 
   defp context_left(token_list, idx, len) do
