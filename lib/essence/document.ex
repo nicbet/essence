@@ -70,4 +70,52 @@ defmodule Essence.Document do
   def words(doc = %Essence.Document{}) do
     doc |> enumerate_tokens |> Enum.filter(&Essence.Token.is_word?/1)
   end
+
+  @doc """
+  Find all occurrences of `token` in the given `Essence.Document`. Returns a
+  list of [token: index] tuples.
+  """
+  def find_token(doc = %Essence.Document{}, token) do
+    doc |> Essence.Document.enumerate_tokens |> Enum.with_index |> Enum.filter( fn({tok, _idx}) -> tok == token end )
+  end
+
+  @doc """
+  For each occurrence of `token` in the given `Essence.Document`, `doc`,
+  returns a list containing the token as well as `n` (default=5) tokens to the left and
+  right of the occurrence.
+  """
+  def context_of(doc = %Essence.Document{}, token, n \\ 5) do
+    indices = doc |> find_token(token)
+    tokens = doc |> enumerate_tokens
+    indices |> Enum.map( fn({tok, idx}) -> context_left(tokens, idx-1, n) ++ [tok] ++ context_right(tokens, idx+1, n) end)
+  end
+
+  @doc """
+  Pretty prints all occurrences of `token` in the given `Essence.Document`,
+  `doc`. Prints `n` (default=20) characters of context.
+  """
+  def concordance(doc = %Essence.Document{}, token, n \\ 20) do
+    doc |> context_of(token) |> Enum.each(&center(&1, n))
+  end
+
+  defp context_left(token_list, idx, len) do
+    token_list |> Enum.slice( (max(0, idx-len))..(idx) )
+  end
+
+  defp context_right(token_list, idx, len) do
+    token_list |> Enum.slice( (idx)..(min(Enum.count(token_list), idx+len)) )
+  end
+
+  defp center(token_list, len) do
+    mid = round(Enum.count(token_list) / 2) -1
+    l = token_list |> Enum.slice(0..mid-1) |> Enum.join(" ")
+    lx = l |> String.slice(-(min(len, String.length(l)))..-1) |> String.pad_leading(len, " ")
+
+    mx = Enum.at(token_list, mid)
+
+    r = token_list |> Enum.slice(mid+1..Enum.count(token_list)) |> Enum.join(" ")
+    rx = r |> String.slice(0..min(len, String.length(r))) |> String.pad_trailing(len, " ")
+
+    IO.puts("#{lx} #{mx} #{rx}")
+  end
 end

@@ -74,4 +74,5 @@ defmodule Essence.Vocabulary do
   defp always_true(_) do
     true
   end
+
 end

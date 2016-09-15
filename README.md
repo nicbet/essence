@@ -12,6 +12,7 @@ Essence is a Natural Language Processing (NLP) and Text Summarization library fo
 - [x] Sentence Detection and Chunking (Basic, done)
 - [x] Vocabulary (Basic, done)
 - [x] Documents (Draft, done)
+- [x] Concordance (done)
 - [ ] **Readability** (ARI done, SMOG done, FC todo, GF done, DC done, CL todo)
 - [x] Reading Time estimates (how long would it take somebody to read the given text, useful for blog posts / articles)
 - [x] Speaking Time estimates (how long would it take somebody to present the given content, useful for speeches, presentations)
@@ -93,4 +94,28 @@ Next, we can compute the lexical richness of the text:
   ```elixir
   iex> Essence.Vocabulary.lexical_richness document
   16.74438622754491
+  ```
+
+Let's get a concordance view on 'Adam':
+  ```elixir
+  iex> Essence.Document.concordance(document, "Adam")
+
+  nd brought them unto Adam to see what he would
+  hem : and whatsoever Adam called every living c
+  e name thereof . And Adam gave names to all cat
+   the field ; but for Adam there was not found a
+  p sleep to fall upon Adam , and he slept : and
+  r unto the man . And Adam said , This is now bo
+  ool of the day : and Adam and his wife hid them
+  LORD God called unto Adam , and said unto him ,
+  over thee . And unto Adam he said , Because tho
+  lt thou return . And Adam called his wife's nam
+  of all living . Unto Adam also and to his wife
+  e tree of life . And Adam knew Eve his wife ; a
+   and sevenfold . And Adam knew his wife again ;
+  f the generations of Adam . In the day that God
+  nd called their name Adam , in the day when the
+  y were created . And Adam lived an hundred and
+  th : And the days of Adam after he had begotten
+  nd all the days that Adam lived were nine hundr
   ```
