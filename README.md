@@ -17,10 +17,14 @@ Essence is a Natural Language Processing (NLP) and Text Summarization library fo
 - [x] Reading Time estimates (how long would it take somebody to read the given text, useful for blog posts / articles)
 - [x] Speaking Time estimates (how long would it take somebody to present the given content, useful for speeches, presentations)
 - [ ] Corpora
-- [ ] Bi-Grams
-- [ ] Tri-Grams
-- [ ] n-Grams
-- [ ] Frequency Measures
+- [x] Bi-Grams
+- [x] Tri-Grams
+- [x] n-Grams
+- [ ] Stopwords for English
+- [ ] Common Names in English (male, female, ambiguous)
+- [ ] Dictionary words in English
+- [x] Dale-Challe's dictionary of easy English words
+- [ ] Frequency Measures: TF, TF/IDF, ...
 - [ ] Time-Series Documents
 - [ ] Dispersion
 - [ ] Similarity Measures
