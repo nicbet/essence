@@ -76,7 +76,7 @@ defmodule Essence.Document do
   list of [token: index] tuples.
   """
   def find_token(doc = %Essence.Document{}, token) do
-    doc |> Essence.Document.enumerate_tokens |> Enum.with_index |> Enum.filter( fn({tok, _idx}) -> tok == token end )
+    doc |> Essence.Document.enumerate_tokens |> Enum.with_index |> Enum.filter( fn({tok, _idx}) -> String.upcase(tok) == String.upcase(token) end )
   end
 
   @doc """
@@ -117,5 +117,11 @@ defmodule Essence.Document do
     rx = r |> String.slice(0..min(len, String.length(r))) |> String.pad_trailing(len, " ")
 
     IO.puts("#{lx} #{mx} #{rx}")
+  end
+
+  def one_contexts_of(doc = %Essence.Document{}, token) do
+    indices = doc |> find_token(token)
+    tokens = doc |> enumerate_tokens
+    indices |> Enum.map( fn({tok, idx}) -> context_left(tokens, idx-1, 0) ++ context_right(tokens, idx+1, 0) end)
   end
 end
