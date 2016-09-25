@@ -10,7 +10,7 @@ defmodule Essence.Tokenizer do
   punctuation, treating words and punctutation as tokens, and removing whitespace.
   """
   @spec tokenize(String.t) :: List.t
-  def tokenize(text, opts \\ []) do
+  def tokenize(text) do
    text
    |> String.split(~r/\s+/u)
    |> Enum.reduce([], fn(x, acc) -> acc ++ split_with_punctuation(x) end)

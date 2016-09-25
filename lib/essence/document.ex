@@ -34,7 +34,7 @@ defmodule Essence.Document do
   @doc """
   Retrieve a the `n`-th tokenized paragraph from the given `Essence.Document`
   """
-  @spec paragraph(document :: %Essence.Document{}, n :: integer) :: List.t 
+  @spec paragraph(document :: %Essence.Document{}, n :: integer) :: List.t
   def paragraph(%Essence.Document{nested_tokens: tokens}, n) do
     tokens |> Enum.at(n)
   end
@@ -75,6 +75,7 @@ defmodule Essence.Document do
   Find all occurrences of `token` in the given `Essence.Document`. Returns a
   list of [token: index] tuples.
   """
+  @spec find_token(doc :: %Essence.Document{}, token :: String.t) :: List.t
   def find_token(doc = %Essence.Document{}, token) do
     doc |> Essence.Document.enumerate_tokens |> Enum.with_index |> Enum.filter( fn({tok, _idx}) -> String.upcase(tok) == String.upcase(token) end )
   end
@@ -84,6 +85,7 @@ defmodule Essence.Document do
   returns a list containing the token as well as `n` (default=5) tokens to the left and
   right of the occurrence.
   """
+  @spec context_of(doc :: %Essence.Document{}, token :: String.t, n :: number) :: List.t
   def context_of(doc = %Essence.Document{}, token, n \\ 5) do
     indices = doc |> find_token(token)
     tokens = doc |> enumerate_tokens
@@ -94,6 +96,7 @@ defmodule Essence.Document do
   Pretty prints all occurrences of `token` in the given `Essence.Document`,
   `doc`. Prints `n` (default=20) characters of context.
   """
+  @spec concordance(doc :: %Essence.Document{}, token :: String.t, n :: number) :: none
   def concordance(doc = %Essence.Document{}, token, n \\ 20) do
     doc |> context_of(token, round(n / 5)+2) |> Enum.each(&center(&1, n))
   end
@@ -119,9 +122,14 @@ defmodule Essence.Document do
     IO.puts("#{lx} #{mx} #{rx}")
   end
 
+  @doc """
+  Returns a list of all the 1-contexts (1 token to the left, 1 token to the right) of the
+  given `token` in the given `document`, excluding the token itself.
+  """
+  @spec one_contexts_of(doc :: %Essence.Document{}, token :: String.t) :: List.t
   def one_contexts_of(doc = %Essence.Document{}, token) do
     indices = doc |> find_token(token)
     tokens = doc |> enumerate_tokens
-    indices |> Enum.map( fn({tok, idx}) -> context_left(tokens, idx-1, 0) ++ context_right(tokens, idx+1, 0) end)
+    indices |> Enum.map( fn({_tok, idx}) -> context_left(tokens, idx-1, 0) ++ context_right(tokens, idx+1, 0) end)
   end
 end

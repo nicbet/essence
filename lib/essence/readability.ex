@@ -133,7 +133,7 @@ defmodule Essence.Readability do
   @doc """
   Calculates an estimate of the time it would take to read the given
   `Essence.Document` as a speech, with a speaking `speed` of 120 words per
-  minute. 
+  minute.
   """
   def speaking_time(doc = %Document{}, speed \\ 120) do
     n_words = doc |> Document.words |> Enum.count
