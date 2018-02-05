@@ -43,7 +43,7 @@ defmodule Essence.Tokenizer do
   Splits a given `text` into tokens on punctuation, but omits the punctuation tokens.
   This method supports Unicode text.
   """
-  @spec split_with_punctuation(String.t) :: List.t
+  @spec split_without_punctuation(String.t) :: List.t
   def split_without_punctuation(text) do
     if String.ends_with?(text, "'s'") do
       [text]
