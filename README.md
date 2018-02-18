@@ -1,6 +1,7 @@
 [![Build Status](https://semaphoreci.com/api/v1/nicbet/essence/branches/master/shields_badge.svg)](https://semaphoreci.com/nicbet/essence)
-![Project Stage](https://img.shields.io/badge/stage-pre--alpha-red.svg)
+![Project Stage](https://img.shields.io/badge/stage-beta-yellow.svg)
 [![Hex.pm](https://img.shields.io/hexpm/v/essence.svg?maxAge=2592000)](https://hex.pm/packages/essence)
+[![hex.pm downloads](https://img.shields.io/hexpm/dt/essence.svg)](https://hex.pm/packages/essence)
 
 # Essence
 
@@ -42,7 +43,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
     ```elixir
     def deps do
-      [{:essence, "~> 0.1.0"}]
+      [{:essence, "~> 0.2.0"}]
     end
     ```
 

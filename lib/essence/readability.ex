@@ -18,22 +18,22 @@ defmodule Essence.Readability do
 
   Commonly, the ARI score is rounded up and translated by the following table:
 
- | ARI score | Readability Level | Reader Age |
- | --------- | ----------------- | ---------- |
- |  1        | Kindergarten      | 5-6        |
- |  2        | First Grade       | 6-7        |
- |  3        | Second Grade      | 7-8        |
- |  4        | Third Grade       | 8-9        |
- |  5        | Fourth Grade      | 9-10       |
- |  6        | Fifth Grade       | 10-11      |
- |  7        | Sixth Grade       | 11-12      |
- |  8        | Seventh Grade     | 12-13      |
- |  9        | Eighth Grade      | 13-14      |
- | 10        | Ninth Grade       | 14-15      |
- | 11        | Tenth Grade       | 15-16      |
- | 12        | Eleventh Grade    | 16-17      |
- | 13        | Twelth Grade      | 17-18      |
- | 14+       | College           | 18-22      |
+  | ARI score | Readability Level | Reader Age |
+  | --------- | ----------------- | ---------- |
+  |  1        | Kindergarten      | 5-6        |
+  |  2        | First Grade       | 6-7        |
+  |  3        | Second Grade      | 7-8        |
+  |  4        | Third Grade       | 8-9        |
+  |  5        | Fourth Grade      | 9-10       |
+  |  6        | Fifth Grade       | 10-11      |
+  |  7        | Sixth Grade       | 11-12      |
+  |  8        | Seventh Grade     | 12-13      |
+  |  9        | Eighth Grade      | 13-14      |
+  | 10        | Ninth Grade       | 14-15      |
+  | 11        | Tenth Grade       | 15-16      |
+  | 12        | Eleventh Grade    | 16-17      |
+  | 13        | Twelth Grade      | 17-18      |
+  | 14+       | College           | 18-22      |
   """
   def ari_score(doc = %Document{}) do
     mu_s = (doc |> Document.sentences |> Enum.map(&Enum.count/1) |> Enum.reduce(&+/2)) / (doc |> Document.sentences |> Enum.count)

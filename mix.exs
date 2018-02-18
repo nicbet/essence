@@ -30,8 +30,10 @@ defmodule Essence.Mixfile do
       files: ["lib", "mix.exs", "README*", "LICENSE*"],
       maintainers: ["Nicolas Bettenburg"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/nicbet/essence",
-               "Docs" => "http://nicbet.github.io/essence"}
+      links: %{
+        "GitHub"  => "https://github.com/nicbet/essence",
+        "Docs"    => "https://nicbet.github.io/essence"
+      }
     ]
   end
 
