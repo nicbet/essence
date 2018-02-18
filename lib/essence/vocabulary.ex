@@ -27,6 +27,11 @@ defmodule Essence.Vocabulary do
     |> vocabulary()
   end
 
+  # Helper function
+  defp vocabulary_size(token_set) do
+    Enum.count(token_set)
+  end
+
   @doc """
   The `lexical_richness` method computes the lexical richness of a given
   text.
@@ -39,9 +44,12 @@ defmodule Essence.Vocabulary do
   def lexical_richness(text) when is_bitstring(text) do
     tokens = Essence.Tokenizer.tokenize(text)
     text_length = Enum.count(tokens)
-    token_set = vocabulary(tokens)
-    # TODO Deal with text of length 0
-    text_length / Enum.count(token_set)
+    voc_n = vocabulary(tokens) |> vocabulary_size
+    if text_length == 0 or voc_n == 0 do
+      0
+    else
+      text_length / voc_n
+    end
   end
 
   @doc """
