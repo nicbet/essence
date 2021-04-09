@@ -1,7 +1,7 @@
-[![Build Status](https://nicbet.semaphoreci.com/badges/essence/branches/master.svg?style=shields)]
+![Build Status](https://nicbet.semaphoreci.com/badges/essence/branches/master.svg?style=shields)
 ![Project Stage](https://img.shields.io/badge/stage-beta-yellow.svg)
-[![Hex.pm](https://img.shields.io/hexpm/v/essence?label=essence&style=plastic)]
-[![hex.pm downloads](https://img.shields.io/hexpm/dt/essence.svg)](https://hex.pm/packages/essence)
+![Hex.pm](https://img.shields.io/hexpm/v/essence?label=essence&style=plastic)
+![hex.pm downloads](https://img.shields.io/hexpm/dt/essence.svg)
 
 # Essence
 
