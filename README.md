@@ -14,10 +14,10 @@ Essence is a Natural Language Processing (NLP) and Text Summarization library fo
 - [x] Vocabulary (Basic, done)
 - [x] Documents (Draft, done)
 - [x] Concordance (done)
-- [ ] **Readability** (ARI done, SMOG done, FC todo, GF done, DC done, CL todo)
+- [x] Readability (ARI done, SMOG done, FC todo, GF done, DC done, CL done)
 - [x] Reading Time estimates (how long would it take somebody to read the given text, useful for blog posts / articles)
 - [x] Speaking Time estimates (how long would it take somebody to present the given content, useful for speeches, presentations)
-- [ ] Corpora
+- [ ] Text Corpora
 - [x] Bi-Grams
 - [x] Tri-Grams
 - [x] n-Grams

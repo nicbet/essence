@@ -120,6 +120,34 @@ defmodule Essence.Readability do
   end
 
   @doc """
+  The Coleman-Liau readability test. Like the ARI but unlike most of the other indices, Coleman–Liau
+  relies on characters instead of syllables per word. Although opinion varies on its accuracy as compared
+  to the syllable/word and complex word indices, characters are more readily and accurately counted by
+  computer programs than are syllables. The Coleman–Liau index was designed to be easily calculated
+  mechanically from samples of hard-copy text. Unlike syllable-based readability indices, it does not
+  require that the character content of words be analyzed, only their length in characters. Therefore,
+  it could be used in conjunction with theoretically simple mechanical scanners that would only need
+  to recognize character, word, and sentence boundaries, removing the need for full optical character
+  recognition or manual keypunching.
+
+  The score output approximates the U.S. grade level thought necessary to comprehend the text.
+  """
+  @spec coleman_liau(%Essence.Document{}) :: float
+  def coleman_liau(doc = %Document{}) do
+    # Average number of letters per 100 words
+    n_letters = doc |> Document.enumerate_tokens() |> Enum.map(fn(token) -> Token.token_length(token) end ) |> Enum.sum
+    n_words = doc |> Document.enumerate_tokens |> Enum.filter(&Token.is_word?/1) |> Enum.count
+    l_metric = n_letters / n_words * 100
+
+    # Average number of sentences per 100 words
+    n_sentences  = doc |> Document.sentences |> Enum.count
+    s_metric = n_sentences / n_words * 100
+
+    score = (0.0588 * l_metric) - (0.296 * s_metric) - 15.8
+    score
+  end
+
+  @doc """
   Calculates an estimate of the time it would take an average reader to read
   the given `Essence.Document`, assuming a reading `speed` of 200 words per
   minute.

@@ -13,6 +13,10 @@ defmodule Essence do
     text
   end
 
+  def document_from_file(filename) do
+    read_file(filename) |> Essence.Document.from_text()
+  end
+
   @doc """
   The `stream_lines` method reads a plain-text file from a given `filename`
   and returns an UTF-8 encoded stream of lines. This allows us to perform

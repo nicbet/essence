@@ -9,7 +9,7 @@ defmodule Essence.Ngrams do
   given `token_list` or `Essence.Document`.
   """
   def bigrams(token_list) when is_list(token_list) do
-    token_list |> Enum.chunk(2,1)
+    token_list |> Enum.chunk_every(2,1)
   end
   def bigrams(doc = %Essence.Document{}) do
     doc |> Essence.Document.enumerate_tokens |> bigrams
@@ -20,7 +20,7 @@ defmodule Essence.Ngrams do
   the given `token_list` or `Essence.Docuemnt`.
   """
   def trigrams(token_list) when is_list(token_list) do
-    token_list |> Enum.chunk(3,1)
+    token_list |> Enum.chunk_every(3,1)
   end
   def trigrams(doc = %Essence.Document{}) do
     doc |> Essence.Document.enumerate_tokens |> trigrams
@@ -31,7 +31,7 @@ defmodule Essence.Ngrams do
   the given `token_list` or `Essence.Docuemnt`.
   """
   def ngrams(token_list, n) when is_list(token_list) do
-    token_list |> Enum.chunk(n, 1)
+    token_list |> Enum.chunk_every(n, 1)
   end
   def ngrams(doc = %Essence.Document{}, n) do
     doc |> Essence.Document.enumerate_tokens |> ngrams(n)

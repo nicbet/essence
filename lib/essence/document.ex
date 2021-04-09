@@ -13,13 +13,13 @@ defmodule Essence.Document do
   @spec from_text(text :: String.t) :: %Essence.Document{}
   def from_text(text) when is_bitstring(text) do
     paragraphs = Essence.Chunker.paragraphs(text)
-    
-    sentences = paragraphs 
+
+    sentences = paragraphs
       |> Enum.map( fn(x) -> Essence.Chunker.sentences(x) end )
-    
-    tokens = sentences 
+
+    tokens = sentences
       |> Enum.map(fn(x) -> x |> Enum.map(fn(y) -> Essence.Tokenizer.tokenize(y) end) end)
-    
+
     %Essence.Document{
       type: :plain_text,
       uri: "",
@@ -57,8 +57,8 @@ defmodule Essence.Document do
   """
   @spec sentence(document :: %Essence.Document{}, n :: integer) :: List.t
   def sentence(doc = %Essence.Document{}, n) do
-    doc 
-    |> sentences 
+    doc
+    |> sentences
     |> Enum.at(n)
   end
 
@@ -67,8 +67,8 @@ defmodule Essence.Document do
   """
   @spec enumerate_tokens(document :: %Essence.Document{}) :: List.t
   def enumerate_tokens(%Essence.Document{nested_tokens: tokens}) do
-    tokens 
-    |> List.flatten() 
+    tokens
+    |> List.flatten()
     |> Enum.map(fn word -> String.downcase word end)
   end
 
@@ -77,8 +77,8 @@ defmodule Essence.Document do
   """
   @spec words(document :: %Essence.Document{}) :: List.t
   def words(doc = %Essence.Document{}) do
-    doc 
-    |> enumerate_tokens 
+    doc
+    |> enumerate_tokens
     |> Enum.filter(&Essence.Token.is_word?/1)
   end
 
@@ -88,9 +88,9 @@ defmodule Essence.Document do
   """
   @spec find_token(doc :: %Essence.Document{}, token :: String.t) :: List.t
   def find_token(doc = %Essence.Document{}, token) do
-    doc 
-    |> Essence.Document.enumerate_tokens 
-    |> Enum.with_index 
+    doc
+    |> Essence.Document.enumerate_tokens
+    |> Enum.with_index
     |> Enum.filter( fn({tok, _idx}) -> String.upcase(tok) == String.upcase(token) end )
   end
 
@@ -110,10 +110,10 @@ defmodule Essence.Document do
   Pretty prints all occurrences of `token` in the given `Essence.Document`,
   `doc`. Prints `n` (default=20) characters of context.
   """
-  @spec concordance(doc :: %Essence.Document{}, token :: String.t, n :: number) :: none
+  @spec concordance(doc :: %Essence.Document{}, token :: String.t, n :: number) :: :ok
   def concordance(doc = %Essence.Document{}, token, n \\ 20) do
-    doc 
-    |> context_of(token, round(n / 5)+2) 
+    doc
+    |> context_of(token, round(n / 5)+2)
     |> Enum.each(&center(&1, n))
   end
 
@@ -127,23 +127,23 @@ defmodule Essence.Document do
 
   defp center(token_list, len) do
     mid = round(Enum.count(token_list) / 2) -1
-    
-    l = token_list 
-      |> Enum.slice(0..mid-1) 
+
+    l = token_list
+      |> Enum.slice(0..mid-1)
       |> Enum.join(" ")
-    
-    lx = l 
-      |> String.slice(-(min(len, String.length(l)))..-1) 
+
+    lx = l
+      |> String.slice(-(min(len, String.length(l)))..-1)
       |> String.pad_leading(len, " ")
 
     mx = Enum.at(token_list, mid)
 
-    r = token_list 
-      |> Enum.slice(mid+1..Enum.count(token_list)) 
+    r = token_list
+      |> Enum.slice(mid+1..Enum.count(token_list))
       |> Enum.join(" ")
-    
-    rx = r 
-      |> String.slice(0..min(len, String.length(r))) 
+
+    rx = r
+      |> String.slice(0..min(len, String.length(r)))
       |> String.pad_trailing(len, " ")
 
     IO.puts("#{lx} #{mx} #{rx}")
@@ -157,7 +157,7 @@ defmodule Essence.Document do
   def one_contexts_of(doc = %Essence.Document{}, token) do
     indices = doc |> find_token(token)
     tokens = doc |> enumerate_tokens
-    
+
     indices |> Enum.map( fn({_tok, idx}) -> context_left(tokens, idx-1, 0) ++ context_right(tokens, idx+1, 0) end)
   end
 end

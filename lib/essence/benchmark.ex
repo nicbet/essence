@@ -9,7 +9,7 @@ defmodule Essence.Benchmark do
   Reading a plain text file from the given `filename` path and tokenizing the
   text. Alternative A.
   """
-  @spec from_plaintext_file_a(filename :: String.t) :: %Essence.Document{}
+  @spec from_plaintext_file_a(filename :: String.t) :: {list, %Essence.Document{} }
   def from_plaintext_file_a(filename) do
     profile do
       content = File.read!(filename)
@@ -27,7 +27,7 @@ defmodule Essence.Benchmark do
   Reading a plain text file from the given `filename` path and tokenizing the
   text. Alternative B.
   """
-  @spec from_plaintext_file_b(filename :: String.t) :: %Essence.Document{}
+  @spec from_plaintext_file_b(filename :: String.t) :: {list, %Essence.Document{}}
   def from_plaintext_file_b(filename) do
     profile do
       stream = Essence.stream_lines(filename)

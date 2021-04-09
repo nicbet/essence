@@ -8,11 +8,10 @@ defmodule Essence.Vocabulary do
   `Essence.Document`. The vocabulary is the unique set of dictionary words in
   that text.
   """
-  @spec vocabulary(Essence.Document.t) :: List.t
+  @spec vocabulary(any()) :: List.t
   def vocabulary(d = %Essence.Document{}) do
     vocabulary(Essence.Document.enumerate_tokens d)
   end
-  @spec vocabulary( Map.t ) :: List.t
   def vocabulary(frequency_distribution) when is_map(frequency_distribution) do
     Map.keys(frequency_distribution)
   end
